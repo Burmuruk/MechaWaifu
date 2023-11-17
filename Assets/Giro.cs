@@ -16,6 +16,11 @@ public class Giro : MonoBehaviour
     float yInicial;
     float calY;
     bool started = false;
+    Quaternion rot;
+
+    GameObject cameraContainer;
+    Gyroscope gyro;
+
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +30,21 @@ public class Giro : MonoBehaviour
         Screen.orientation = ScreenOrientation.LandscapeLeft;
         curRotation = Input.acceleration;
         Input.gyro.enabled = true;
+
+        cameraContainer = new GameObject("Camera container");
+        cameraContainer.transform.position = transform.position;
+        transform.SetParent(cameraContainer.transform);
         
+        gyro = Input.gyro;
+        EnableGyro();
+    }
+
+    private void EnableGyro()
+    {
+        gyro.enabled = true;
+        cameraContainer.transform.rotation = Quaternion.Euler(180, 90, 0);
+        rot = new Quaternion(0, 0, 1, 0);
+
     }
 
     // Update is called once per frame
@@ -50,17 +69,29 @@ public class Giro : MonoBehaviour
         //transform.rotation = Quaternion.Euler((cel.y - offset.y) , (cel.x - offset.x) * acel.y * speed * -1, cel.z - offset.z);
         //transform.rotation = Quaternion.Euler(cel.x, cel.y * -1, cel.z + 180);
 
-        transform.rotation = Input.gyro.attitude;
-        //transform.rotation = Quaternion.Euler((cel.y - offset.y) , (cel.x - offset.x) * acel.y * speed * -1, cel.z - offset.z);
-        transform.Rotate(0, 0, 180, Space.Self);
-        transform.Rotate(90, 180, 0, Space.World);
 
-        if (started)
-        {
-            System.Timers.Timer hu = new System.Timers.Timer(3000);
-            hu.AutoReset = false;
-            hu.Elapsed += delegate { calY = transform.eulerAngles.y - yInicial; };
-        }
+
+
+
+        //transform.rotation = Input.gyro.attitude;
+        ////transform.rotation = Quaternion.Euler((cel.y - offset.y) , (cel.x - offset.x) * acel.y * speed * -1, cel.z - offset.z);
+        //transform.Rotate(0, 0, 180, Space.Self);
+        //transform.Rotate(90, 180, 0, Space.World);
+
+        //if (started)
+        //{
+        //    System.Timers.Timer hu = new System.Timers.Timer(3000);
+        //    hu.AutoReset = false;
+        //    hu.Elapsed += delegate { calY = transform.eulerAngles.y - yInicial; };
+        //}
+
+
+
+
+        transform.localRotation = Input.gyro.attitude * rot;
+
+
+
 
 
         //if (Input.gyro.attitude.eulerAngles is var r && MathF.Abs(curRotation.magnitude - r.magnitude) > gap)
