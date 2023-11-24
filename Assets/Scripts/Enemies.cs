@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Enemies : Character
 {
+    [SerializeField]
+    GameObject[] drops;
+    int item = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +30,25 @@ public class Enemies : Character
         {
             attacks = Attack.shoot;
             Attacking();
+        }
+
+        if (health <= 0)
+        {
+            item = Random.Range(0, 100);
+
+            if (item <= 20)
+            {
+                Instantiate(drops[0], transform.position, Quaternion.identity);
+            }
+            else if (item > 20 && item <= 50)
+            {
+                Instantiate(drops[1], transform.position, Quaternion.identity);
+            }
+            else if (item > 50)
+            {
+                Instantiate(drops[2], transform.position, Quaternion.identity);
+            }
+            Destroy(gameObject);
         }
     }
 }

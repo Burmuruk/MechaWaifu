@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 284156210}
   m_Layer: 0
   m_Name: Enemy (1)
-  m_TagString: Player
+  m_TagString: Enemies
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -239,8 +239,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14a4d891161d1d2499ae200e2221fc34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 3
+  fuel: 100
   bullets: {fileID: 8878271999670219957, guid: d053532eadc47f246a0000c11ca4aebe, type: 3}
   sword: {fileID: 1780441598}
+  ammo: 10
+  drops:
+  - {fileID: 3375667679726945335, guid: 13c9b7fb57aad9348b316f69acf80da4, type: 3}
+  - {fileID: 6820591696699460378, guid: d006b69460e63a64f967b01de696862a, type: 3}
+  - {fileID: 2797311783759614294, guid: 5ab2c82da2941d44f8c42e6ca12b2a1e, type: 3}
 --- !u!65 &284156211
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -529,8 +536,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14a4d891161d1d2499ae200e2221fc34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 3
+  fuel: 100
   bullets: {fileID: 8878271999670219957, guid: d053532eadc47f246a0000c11ca4aebe, type: 3}
   sword: {fileID: 424426435}
+  ammo: 10
+  drops: []
 --- !u!1 &1780441598
 GameObject:
   m_ObjectHideFlags: 0

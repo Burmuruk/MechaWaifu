@@ -11,17 +11,13 @@ public class Character : MonoBehaviour
     }
 
     int dmg = 1;
-    int health = 3;
+    public int health = 3;
     public void Damage()
     {
         health -= dmg;
-
-        if (health == 0)
-        {
-            Destroy(gameObject);
-        }
     }
 
+    public int fuel = 100;
     protected void Fly()
     {
 
@@ -50,6 +46,7 @@ public class Character : MonoBehaviour
         slice, shoot
     }
     protected Attack attacks;
+    public int ammo = 10;
     protected void Attacking()
     {
         if (!isDashing)
@@ -61,8 +58,12 @@ public class Character : MonoBehaviour
                         StartCoroutine(ActivateCollider());
                     break;
                 case Attack.shoot:
-                    if (bullets)
+                    if (bullets && ammo != 0)
+                    {
                         Instantiate(bullets, transform.position, Quaternion.identity);
+                        ammo -= 1;
+                        Debug.Log(ammo);
+                    }
                     break;
                 default:
                     break;
