@@ -62,7 +62,6 @@ public class Character : MonoBehaviour
                     {
                         Instantiate(bullets, transform.position, Quaternion.identity);
                         ammo -= 1;
-                        Debug.Log(ammo);
                     }
                     break;
                 default:
