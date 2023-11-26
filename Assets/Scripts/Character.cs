@@ -1,52 +1,156 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Character : MonoBehaviour
 {
+    #region Pollo
+    [Header("Movement")]
+    public float speed = 5f;
+    public float flySpeed = .5f;
+    public float dashSpeed;
+    [SerializeField] bool isDashing;
+    public int time = 1;
+    float count = 0;
+    Rigidbody rig;
 
-    protected void Start()
-    {
-        
-    }
+    public bool IsDashig { get => isDashing; private set => isDashing = value; }
+    #endregion
 
-    int dmg = 1;
-    public int health = 3;
-    public void Damage()
-    {
-        health -= dmg;
-    }
+    #region Boi
+    [Space(10), Header("Health")]
+    [SerializeField] int health = 3;
 
-    public int fuel = 100;
-    protected void Fly()
-    {
-
-    }
-
-    bool isDashing = false;
-
-    protected void Dash()
-    {
-
-    }
-
-    protected void Movement()
-    {
-
-    }
-
+    [Space(10), Header("Attack")]
     [SerializeField]
+    [Tooltip("Número de balas a disparar.")]
     GameObject bullets;
-
     [SerializeField]
     protected GameObject sword;
+    protected Attack attacks;
+    int dmg = 1;
+    [SerializeField] int ammo = 10;
+    [SerializeField] float fuel = 100;
+    [SerializeField] float fuelConsuption = 2;
+
+    public int Ammo
+    {
+        get => ammo;
+        set
+        {
+            ammo = value;
+            OnAmmoChanged?.Invoke(value);
+        }
+    }
+
+    public int Health
+    {
+        get => health;
+        set
+        {
+            health = value;
+            OnHealthChanged?.Invoke(value);
+        }
+    }
+
+    public float Fuel
+    {
+        get => fuel;
+        set
+        {
+            fuel = value;
+            OnFuelChanged?.Invoke(value);
+        }
+    }
 
     protected enum Attack
     {
         slice, shoot
     }
-    protected Attack attacks;
-    public int ammo = 10;
+
+    public event Action<float> OnHealthChanged;
+    public event Action<int> OnAmmoChanged;
+    public event Action<float> OnFuelChanged;
+    #endregion
+
+    protected virtual void Awake()
+    {
+        rig = GetComponent<Rigidbody>();
+    }
+
+    protected virtual void Start()
+    {
+        if (sword)
+        {
+            sword.gameObject.SetActive(false);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (isDashing)
+        {
+            count += Time.deltaTime;
+            if (count >= time)
+            {
+                gameObject.GetComponent<Collider>().enabled = true;
+                rig.useGravity = true;
+                isDashing = false;
+                count = 0;
+            }
+        }
+    }
+
+    public void Damage()
+    {
+        Health -= dmg;
+    }
+
+    protected void Fly(bool value = true)
+    {
+        if (value)
+        {
+            rig.velocity = new()
+            {
+                x = rig.velocity.x,
+                y = flySpeed,
+                z = rig.velocity.z,
+            };
+
+            Fuel -= fuelConsuption * Time.deltaTime;
+        }
+        //else
+        //    speed = 5f;
+    }
+
+    protected void Dash(Vector3 direction)
+    {
+        isDashing = true;
+
+        rig.AddForce(direction.normalized * dashSpeed, ForceMode.Impulse);
+
+        rig.useGravity = false;
+        gameObject.GetComponent<Collider>().enabled = false;
+    }
+
+    protected void MoveTo(Vector3 direction)
+    {
+        Vector3 movementDirection = new Vector3(direction.x, 0, direction.z);
+        movementDirection.Normalize();
+        var destiny = transform.position + movementDirection;
+        var velocity = (destiny - transform.position).normalized * speed;
+
+        rig.velocity = new()
+        {
+            x = ((destiny - transform.position).normalized * speed).x,
+            y = rig.velocity.y,
+            z = ((destiny - transform.position).normalized * speed).z,
+        };
+
+        //if (movementDirection != Vector3.zero) transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movementDirection), rotationSpeed * Time.deltaTime);
+    }
+
     protected void Attacking()
     {
         if (!isDashing)
@@ -58,10 +162,10 @@ public class Character : MonoBehaviour
                         StartCoroutine(ActivateCollider());
                     break;
                 case Attack.shoot:
-                    if (bullets && ammo != 0)
+                    if (bullets && Ammo != 0)
                     {
                         Instantiate(bullets, transform.position, Quaternion.identity);
-                        ammo -= 1;
+                        Ammo -= 1;
                     }
                     break;
                 default:

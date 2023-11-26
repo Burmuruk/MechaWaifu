@@ -5,8 +5,8 @@ using UnityEngine;
 public class ESpawner : MonoBehaviour
 {
     EnemiesPool pool;
-    [SerializeField] GameObject[] spawnPoints;
     [SerializeField] GameObject[] distancePoints;
+    [SerializeField] GameObject[] nearPoints;
     [SerializeField] int dis = 5;
     [SerializeField] int near = 10;
 
@@ -23,13 +23,13 @@ public class ESpawner : MonoBehaviour
         for (int i = 0; i < dis; i++)
         {
             en = pool.GetEnemy(EnemyType.Distance);
-            en.transform.position = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)].transform.position; 
+            en.transform.position = distancePoints[UnityEngine.Random.Range(0, distancePoints.Length)].transform.position; 
         }
 
         for (int i = 0; i < near; i++)
         {
             en = pool.GetEnemy(EnemyType.Melee);
-            en.transform.position = distancePoints[UnityEngine.Random.Range(0, distancePoints.Length)].transform.position; 
+            en.transform.position = nearPoints[UnityEngine.Random.Range(0, nearPoints.Length)].transform.position; 
         }
     }
 

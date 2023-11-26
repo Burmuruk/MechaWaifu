@@ -13,48 +13,31 @@ public class HUD : MonoBehaviour
     public float fuelAmount = 100f;
 
     public TextMeshProUGUI bulletCount;
-    public int bullets = 10;
+    Player player;
+
+    private void Awake()
+    {
+        player = FindObjectOfType<Player>();
+        player.OnHealthChanged += ShowHealth;
+        player.OnAmmoChanged += BulletCount;
+        player.OnFuelChanged += ShowFuel;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        bulletCount.text = "00";
+        bulletCount.text = player.Ammo.ToString();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            TakeDamage(10);
-        }
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            Heal(10);
-        }
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            UseFuel(10);
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            RechargeFuel(10);
-        }
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            bullets -= 1;
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            bullets += 1;
-        }
-        BulletCount();
+
     }
 
-    public void TakeDamage(float damage)
+    public void ShowHealth(float health)
     {
-        healthAmount -= damage;
-        healthBar.fillAmount = healthAmount / 100f;
+        healthBar.fillAmount = health / 100f;
     }
 
     public void Heal(float healingAmount)
@@ -65,10 +48,10 @@ public class HUD : MonoBehaviour
         healthBar.fillAmount = healthAmount / 100f;
     }
 
-    public void UseFuel(float fuelUsed)
+    public void ShowFuel(float fuel)
     {
-        fuelAmount -= fuelUsed;
-        fuelBar.fillAmount = fuelAmount / 100f;
+        fuelAmount -= fuel;
+        fuelBar.fillAmount = fuel / 100f;
     }
 
     public void RechargeFuel(float rechargingAmount)
@@ -79,7 +62,7 @@ public class HUD : MonoBehaviour
         fuelBar.fillAmount = fuelAmount / 100f;
     }
 
-    public void BulletCount()
+    public void BulletCount(int bullets)
     {
         bulletCount.text = bullets.ToString();
     }

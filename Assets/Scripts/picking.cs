@@ -17,15 +17,15 @@ public class picking : MonoBehaviour
             switch (drop)
             {
                 case Drops.ammo:
-                    other.GetComponent<Character>().ammo += 5;
+                    other.GetComponent<Character>().Ammo += 5;
                     Destroy(gameObject);
                     break;
                 case Drops.health:
-                    other.GetComponent<Character>().health += 1;
+                    other.GetComponent<Character>().Health += 1;
                     Destroy(gameObject);
                     break;
                 case Drops.fuel:
-                    other.GetComponent<Character>().fuel += 20;
+                    other.GetComponent<Character>().Fuel += 20;
                     Destroy(gameObject);
                     break;
                 default:

@@ -6,49 +6,53 @@ public class Enemies : Character
 {
     [SerializeField]
     GameObject[] drops;
+    EnemiesPool pool;
     int item = 0;
 
-    // Start is called before the first frame update
-    void Start()
+    protected override void Awake()
     {
-        if (sword)
-        {
-            sword.gameObject.SetActive(false);
-        }
+        base.Awake();
+
+        pool = FindObjectOfType<EnemiesPool>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.G))
         {
             attacks = Attack.slice;
             Attacking();
         }
 
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.H))
         {
             attacks = Attack.shoot;
             Attacking();
         }
 
-        if (health <= 0)
+        if (Health <= 0)
         {
-            item = Random.Range(0, 100);
+            Drop();
+            pool.Kill(this);
+        }
+    }
 
-            if (item <= 20)
-            {
-                Instantiate(drops[0], transform.position, Quaternion.identity);
-            }
-            else if (item > 20 && item <= 50)
-            {
-                Instantiate(drops[1], transform.position, Quaternion.identity);
-            }
-            else if (item > 50)
-            {
-                Instantiate(drops[2], transform.position, Quaternion.identity);
-            }
-            Destroy(gameObject);
+    private void Drop()
+    {
+        item = Random.Range(0, 100);
+
+        if (item <= 20)
+        {
+            Instantiate(drops[0], transform.position, Quaternion.identity);
+        }
+        else if (item > 20 && item <= 50)
+        {
+            Instantiate(drops[1], transform.position, Quaternion.identity);
+        }
+        else if (item > 50)
+        {
+            Instantiate(drops[2], transform.position, Quaternion.identity);
         }
     }
 }

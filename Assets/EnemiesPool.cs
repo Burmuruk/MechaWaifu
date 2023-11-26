@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
 using UnityEngine;
 
 public enum EnemyType
@@ -13,15 +14,17 @@ public enum EnemyType
 public class EnemiesPool : MonoBehaviour
 {
     [SerializeField] EnemyData[] enemies;
-    Dictionary<EnemyType, LinkedList<EnemyTest>> collection;
-    Dictionary<EnemyType, LinkedList<EnemyTest>> availables;
-    Dictionary<EnemyType, LinkedList<EnemyTest>> inScene;
+    Dictionary<EnemyType, LinkedList<Enemies>> collection;
+    Dictionary<EnemyType, LinkedList<Enemies>> availables;
+    Dictionary<EnemyType, LinkedList<Enemies>> inScene;
+
+    int count = 0;
 
     [Serializable]
     public struct EnemyData
     {
         public EnemyType type;
-        public EnemyTest Enemy;
+        public Enemies Enemy;
     }
 
     private void Awake()
@@ -51,28 +54,36 @@ public class EnemiesPool : MonoBehaviour
         {
             inScene[type].AddLast(availables[type].First);
             availables[type].RemoveFirst();
+            inScene[type].Last.Value.Health = 3;
+            inScene[type].Last.Value.gameObject.SetActive(true);
 
             return inScene[type].Last.Value.gameObject;
         }
 
-        return Instantiate(collection[type].First.Value.gameObject, transform);
+        var newEnemy = Instantiate(collection[type].First.Value.gameObject, transform);
+        newEnemy.name = $"Enemy {Enum.GetNames(typeof(EnemyType))[(int)type]} {count++}";
+        inScene[type].AddLast(newEnemy.GetComponent<Enemies>());
+
+        return newEnemy;
     }
 
-    public void Kill(EnemyTest enemy)
+    public void Kill(Enemies enemy)
     {
-        foreach (var key in availables.Keys)
+        foreach (var key in inScene.Keys)
         {
-            var cur = availables[key].First;
-            for (int i = 0; i < availables.Keys.Count; i++)
+            var cur = inScene[key].First;
+            for (int i = 0; i < inScene[key].Count; i++)
             {
                 if (cur.Value.GetInstanceID() == enemy.GetInstanceID())
                 {
                     cur.Value.gameObject.SetActive(false);
                     inScene[key].Remove(cur);
                     availables[key].AddLast(cur);
+                    break;
                 }
-            }
 
+                cur = cur.Next;
+            }
         }
     }
 }
