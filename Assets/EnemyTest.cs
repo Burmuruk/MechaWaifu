@@ -27,8 +27,7 @@ public class EnemyTest2 : Character
 
         if (Ammo > 0)
         {
-            attacks = Attack.shoot;
-            Attacking();
+            Attacking(Attack.shoot);
         }
     }
 }

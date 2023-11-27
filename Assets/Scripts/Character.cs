@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Compilation;
 using UnityEngine;
 
 public class Character : MonoBehaviour
@@ -13,7 +14,7 @@ public class Character : MonoBehaviour
     [SerializeField] bool isDashing;
     public int time = 1;
     float count = 0;
-    Rigidbody rig;
+    protected Rigidbody rig;
 
     public bool IsDashig { get => isDashing; private set => isDashing = value; }
     #endregion
@@ -24,7 +25,7 @@ public class Character : MonoBehaviour
 
     [Space(10), Header("Attack")]
     [SerializeField]
-    [Tooltip("Número de balas a disparar.")]
+    [Tooltip("Bullet to instanciate.")]
     GameObject bullets;
     [SerializeField]
     protected GameObject sword;
@@ -72,6 +73,12 @@ public class Character : MonoBehaviour
     public event Action<float> OnHealthChanged;
     public event Action<int> OnAmmoChanged;
     public event Action<float> OnFuelChanged;
+    #endregion
+
+    #region Burmuruk
+    [SerializeField] protected Attack attackType = Attack.shoot;
+    [SerializeField] float attackRate = 1;
+    bool canAttack = true;
     #endregion
 
     protected virtual void Awake()
@@ -151,27 +158,38 @@ public class Character : MonoBehaviour
         //if (movementDirection != Vector3.zero) transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movementDirection), rotationSpeed * Time.deltaTime);
     }
 
-    protected void Attacking()
+    protected void Attacking(Attack attackType)
     {
-        if (!isDashing)
+        if (isDashing || !canAttack) return;
+
+        switch (attackType)
         {
-            switch (attacks)
-            {
-                case Attack.slice:
-                    if (!sword.gameObject.activeSelf)
-                        StartCoroutine(ActivateCollider());
-                    break;
-                case Attack.shoot:
-                    if (bullets && Ammo != 0)
-                    {
-                        Instantiate(bullets, transform.position, Quaternion.identity);
-                        Ammo -= 1;
-                    }
-                    break;
-                default:
-                    break;
-            }
+            case Attack.slice:
+                if (!sword.gameObject.activeSelf)
+                    StartCoroutine(ActivateCollider());
+                break;
+            case Attack.shoot:
+                if (bullets && Ammo != 0)
+                {
+                    print("shoot");
+                    Instantiate(bullets, transform.position, Quaternion.identity);
+                    Ammo -= 1;
+                }
+                break;
+            default:
+                break;
         }
+
+        StartCoroutine(AttackCooldown());
+    }
+
+    IEnumerator AttackCooldown()
+    {
+        canAttack = false;
+
+        yield return new WaitForSeconds(attackRate);
+
+        canAttack = true;
     }
 
     IEnumerator ActivateCollider()
