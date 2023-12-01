@@ -10,9 +10,9 @@ public class Giro : MonoBehaviour
     [SerializeField] float gap =.5f;
     Vector3 curRotation = default;
     public float zOffset = 130;
-    Vector3 offset = default;
+    [SerializeField] Vector3 offsetPos = default;
+    [SerializeField] Vector3 startRotation = new Vector3(180, 180, 0);
     Vector3 acel = default;
-    Vector3 newRotation = default;
     float yInicial;
     float calY;
     bool started = false;
@@ -20,7 +20,12 @@ public class Giro : MonoBehaviour
 
     GameObject cameraContainer;
     Gyroscope gyro;
+    Player player;
 
+    private void Awake()
+    {
+        player = FindObjectOfType<Player>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -32,8 +37,11 @@ public class Giro : MonoBehaviour
         Input.gyro.enabled = true;
 
         cameraContainer = new GameObject("Camera container");
-        cameraContainer.transform.position = transform.position;
+        //cameraContainer.transform.position = transform.position;
+        cameraContainer.transform.SetParent(transform.parent);
+        cameraContainer.transform.position = new (0, 1f, 0);
         transform.SetParent(cameraContainer.transform);
+        transform.position = offsetPos;
         
         gyro = Input.gyro;
         EnableGyro();
@@ -42,7 +50,7 @@ public class Giro : MonoBehaviour
     private void EnableGyro()
     {
         gyro.enabled = true;
-        cameraContainer.transform.rotation = Quaternion.Euler(180, 90, 0);
+        cameraContainer.transform.rotation = Quaternion.Euler(startRotation);
         rot = new Quaternion(0, 0, 1, 0);
 
     }
@@ -87,9 +95,9 @@ public class Giro : MonoBehaviour
 
 
 
-
-        transform.localRotation = Input.gyro.attitude * rot;
-
+        Quaternion rotation = Input.gyro.attitude * rot;
+        transform.localRotation = rotation;
+        //player.transform.forward = new Vector3(transform.forward.x, player.transform.forward.y, player.transform.forward.z);
 
 
 

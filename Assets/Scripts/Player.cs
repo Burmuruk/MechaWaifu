@@ -26,14 +26,12 @@ public class Player : Character
 
         if (Input.GetMouseButtonDown(0))
         {
-            attacks = Attack.slice;
-            Attacking();
+            Attacking(Attack.slice);
         }
 
         if (Input.GetMouseButtonDown(1))
         {
-            attacks = Attack.shoot;
-            Attacking();
+            Attacking(Attack.shoot);
         }
     }
 }

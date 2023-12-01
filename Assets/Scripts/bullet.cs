@@ -8,10 +8,13 @@ public class bullet : MonoBehaviour
     float speed = .1f;
     float timer = 3000f;
     float count = 0f;
+
+    public string EnemyTag { get => enemyTag; }
+
     void Update()
     {
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + speed);
-        count++;
+        count += Time.deltaTime;
         if (count>timer)
         {
             Destroy(gameObject);
@@ -22,6 +25,7 @@ public class bullet : MonoBehaviour
     {
         if (other.tag == enemyTag)
         {
+            print(other.transform.name);
             other.GetComponent<Character>().Damage();
             Destroy(gameObject);
         }
