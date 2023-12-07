@@ -740,7 +740,7 @@ MonoBehaviour:
   fuel: 100
   fuelConsuption: 2
   attackType: 1
-  attackRate: 1
+  attackRate: 0.2
 --- !u!54 &698185002
 Rigidbody:
   m_ObjectHideFlags: 0

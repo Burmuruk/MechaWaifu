@@ -155,6 +155,7 @@ public class Character : MonoBehaviour
             z = ((destiny - transform.position).normalized * speed).z,
         };
 
+        //transform.forward = direction;
         //if (movementDirection != Vector3.zero) transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movementDirection), rotationSpeed * Time.deltaTime);
     }
 
@@ -172,7 +173,8 @@ public class Character : MonoBehaviour
                 if (bullets && Ammo != 0)
                 {
                     print("shoot");
-                    Instantiate(bullets, transform.position, Quaternion.identity);
+                    var bullet = Instantiate(bullets, transform.position, Quaternion.identity);
+                    bullet.transform.forward = transform.forward;
                     Ammo -= 1;
                 }
                 break;
