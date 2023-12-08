@@ -113,14 +113,19 @@ public class Enemies : Character
         {
             Instantiate(drops[0], transform.position, Quaternion.identity);
         }
-        else if (item > 20 && item <= 50)
+        else if (item > 20 && item <= 45)
         {
             Instantiate(drops[1], transform.position, Quaternion.identity);
         }
-        else if (item > 50)
+        else if (item > 45 && item <= 75)
         {
             Instantiate(drops[2], transform.position, Quaternion.identity);
         }
+        else if (item > 75)
+        {
+           
+        }
+
     }
 
     IEnumerator CheckDash()
