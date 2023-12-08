@@ -25,8 +25,11 @@ public class Enemies : Character
     [SerializeField] GameObject ShotPoint;
 
     Player player;
+    HUD hud;
     EnemiesPool pool;
     int item = 0;
+
+    public int enemiesKilled;
 
     protected override void Awake()
     {
@@ -61,6 +64,8 @@ public class Enemies : Character
 
         if (Health <= 0)
         {
+            enemiesKilled += 1;
+            hud.Score(enemiesKilled);
             Drop();
             pool.Kill(this);
             return;
