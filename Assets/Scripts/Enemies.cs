@@ -22,6 +22,8 @@ public class Enemies : Character
 
     bool dashChecking = false;
 
+    [SerializeField] GameObject ShotPoint;
+
     Player player;
     EnemiesPool pool;
     int item = 0;
@@ -44,16 +46,17 @@ public class Enemies : Character
     // Update is called once per frame
     void Update()
     {
-        if (IsDashig) return;
+        if (IsDashig || player.pause) return;
 
         if (Input.GetKeyDown(KeyCode.G))
         {
-            Attacking(Attack.slice);
+            Attacking(Attack.slice, ShotPoint.transform.position);
         }
 
         if (Input.GetKeyDown(KeyCode.H))
         {
-            Attacking(Attack.shoot);
+            
+            Attacking(Attack.shoot, ShotPoint.transform.position);
         }
 
         if (Health <= 0)
@@ -67,7 +70,7 @@ public class Enemies : Character
         if (dis < minDistance)
         {
             attacks = attackType;
-            Attacking(attackType);
+            Attacking(attackType, ShotPoint.transform.position, (player.transform.position - ShotPoint.transform.position).normalized);
             print("Attack");
         }
         if (dis > midDistance)

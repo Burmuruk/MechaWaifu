@@ -25,6 +25,8 @@ public class bullet : MonoBehaviour
 
     void Update()
     {
+        if (player.pause) return;
+
         //transform.position += direction * speed;
         transform.position += transform.forward * speed;
 

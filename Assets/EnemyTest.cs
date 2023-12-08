@@ -8,6 +8,8 @@ public class EnemyTest2 : Character
     [SerializeField] float minDistance = 10;
     Player player;
 
+    [SerializeField] GameObject ShotPoint;
+
     protected override void Awake()
     {
         base.Awake();
@@ -27,7 +29,7 @@ public class EnemyTest2 : Character
 
         if (Ammo > 0)
         {
-            Attacking(Attack.shoot);
+            Attacking(Attack.shoot, ShotPoint.transform.position);
         }
     }
 }

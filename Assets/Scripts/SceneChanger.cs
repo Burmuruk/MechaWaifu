@@ -15,9 +15,15 @@ public class SceneChanger : MonoBehaviour
 
     public void GoToScene(int index)
     {
+        Time.timeScale = 1;
         fadeboxAnimator.SetInteger("State", 1);
         StartCoroutine(WaitForFade(index));
         
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 
     IEnumerator WaitForFade(int index)

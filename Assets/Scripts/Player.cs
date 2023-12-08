@@ -1,16 +1,42 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : Character
 {
     Vector3 direction = default;
 
+    [SerializeField]public bool pause = false;
+
     public Vector3 CameraForward { get; set; }
     public Vector3 CameraNormal { get; set; }
 
+    [SerializeField] GameObject ShotPoint;
+
+    public GameObject pausePanel;
+
     private void Update()
     {
-        if (IsDashig) return;
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Pause"))
+        {
+            if (Time.timeScale == 1)
+            {
+                Time.timeScale = 0;
+                pause = true;
+                pausePanel.SetActive(true);
+            }
+            else
+            {
+                Time.timeScale = 1;
+                pause = false;
+                pausePanel.SetActive(false);
+            }
+
+        }
+
+
+
+        if (IsDashig || pause) return;
 
         if (Input.GetKey("space") || Input.GetButton("Fly"))
             Fly();
@@ -51,12 +77,12 @@ public class Player : Character
 
         if (Input.GetMouseButtonDown(0) || Input.GetButtonDown("Hit"))
         {
-            Attacking(Attack.slice);
+            Attacking(Attack.slice, ShotPoint.transform.position);
         }
 
         if (Input.GetMouseButtonDown(1) || Input.GetButtonDown("Shoot"))
         {
-            Attacking(Attack.shoot, CameraForward);
+            Attacking(Attack.shoot, ShotPoint.transform.position, CameraForward);
             Debug.DrawRay(transform.position, CameraForward);
         }
     }

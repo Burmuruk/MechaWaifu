@@ -161,7 +161,7 @@ public class Character : MonoBehaviour
         //if (movementDirection != Vector3.zero) transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movementDirection), rotationSpeed * Time.deltaTime);
     }
 
-    protected void Attacking(Attack attackType, Vector3 direction = default)
+    protected void Attacking(Attack attackType, Vector3 shootPoint, Vector3 direction = default)
     {
         if (isDashing || !canAttack) return;
 
@@ -175,7 +175,7 @@ public class Character : MonoBehaviour
                 if (bullets && Ammo != 0)
                 {
                     print("shoot");
-                    var bullet = Instantiate(bullets, transform.position, Quaternion.identity);
+                    var bullet = Instantiate(bullets, shootPoint, Quaternion.identity);
                     bullet.transform.forward = direction == default ? transform.forward : direction;
                     Ammo -= 1;
                 }
