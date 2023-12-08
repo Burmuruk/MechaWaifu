@@ -29,6 +29,7 @@ public class Enemies : Character
     HUD hud;
     EnemiesPool pool;
     int item = 0;
+    bool refillingFuel = false;
 
     public static int enemiesKilled;
 
@@ -92,9 +93,9 @@ public class Enemies : Character
         if (player)
             transform.forward = (player.transform.position - transform.position).normalized;
 
-        if (Fuel <= 0)
+        if (Fuel <= 0 && !refillingFuel)
         {
-
+            StartCoroutine(RefillFuel());
         }
     }
 
@@ -158,6 +159,7 @@ public class Enemies : Character
                     var angle = Random.Range(0, dashAngle);
                     angle *= Random.value < .5f ? -1 : 1;
                     Vector3 direction = (transform.position - enemyPosition) / Mathf.Cos(angle);
+                    Debug.DrawRay(transform.position, direction * 5, Color.red);
 
                     Dash(direction);
                 }
@@ -171,8 +173,11 @@ public class Enemies : Character
 
     IEnumerator RefillFuel()
     {
+        refillingFuel = true;
+
         yield return new WaitForSeconds(timeToRefillFuel);
 
         Fuel = maxFuel;
+        refillingFuel = false;
     }
 }
