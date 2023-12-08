@@ -2203,9 +2203,11 @@ MonoBehaviour:
   - type: 1
     Enemy: {fileID: 8852156883719906888, guid: 8e1dc2673a504ee48b1101bf70895ba4, type: 3}
   - type: 0
-    Enemy: {fileID: 6621152494915015196, guid: dc44e449efcdc7b48af859f1f5e07d4e, type: 3}
+    Enemy: {fileID: 6621152494915015196, guid: 00af1d0f5bad8ca41916a6d2cc2de64e, type: 3}
   - type: 2
     Enemy: {fileID: 1109420331979910561, guid: 777c18d7a9868934e9b03c937b4bac96, type: 3}
+  - type: 3
+    Enemy: {fileID: 6621152494915015196, guid: dc44e449efcdc7b48af859f1f5e07d4e, type: 3}
 --- !u!114 &258677927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2250,6 +2252,8 @@ MonoBehaviour:
   - type: 0
     count: 50
   - type: 2
+    count: 5
+  - type: 3
     count: 5
   spawnTime: 60
   maxCount: 100
