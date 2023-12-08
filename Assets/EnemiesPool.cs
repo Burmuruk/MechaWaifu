@@ -8,7 +8,8 @@ public enum EnemyType
 {
     Distance,
     Melee,
-    Berserker
+    Berserker,
+    RocketLauncher
 }
 
 public class EnemiesPool : MonoBehaviour
