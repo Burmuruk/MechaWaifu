@@ -97,8 +97,10 @@ public class Giro : MonoBehaviour
 
         Quaternion rotation = Input.gyro.attitude * rot;
         transform.localRotation = rotation;
-        //player.transform.forward = new Vector3(transform.forward.x, player.transform.forward.y, player.transform.forward.z);
-
+        player.transform.forward = new Vector3(transform.forward.x, player.transform.forward.y, player.transform.forward.z);
+        //player.transform.Rotate(Vector3.up, transform.rotation.y);
+        //player.transform.rotation = Quaternion.Euler(new(player.transform.localEulerAngles.x, transform.rotation.y, player.transform.rotation.z));
+        player.CameraNormal = Vector3.Cross(transform.forward, transform.right);
 
 
 

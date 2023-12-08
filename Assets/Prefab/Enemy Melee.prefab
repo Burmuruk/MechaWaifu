@@ -287,6 +287,8 @@ MonoBehaviour:
   ammo: 200
   fuel: 100
   fuelConsuption: 2
+  attackType: 1
+  attackRate: 1
   drops:
   - {fileID: 6820591696699460378, guid: d006b69460e63a64f967b01de696862a, type: 3}
   - {fileID: 3375667679726945335, guid: 13c9b7fb57aad9348b316f69acf80da4, type: 3}
@@ -298,7 +300,6 @@ MonoBehaviour:
   dashProbability: 0.09
   dashCheckTime: 1
   dashAngle: 45
-  attackType: 1
 --- !u!54 &9085885773039336607
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -313,5 +314,5 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0

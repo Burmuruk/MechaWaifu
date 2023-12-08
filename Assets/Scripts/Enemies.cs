@@ -74,6 +74,9 @@ public class Enemies : Character
         {
             MoveTo(player.transform.position - transform.position);
         }
+
+        if (player)
+            transform.forward = (player.transform.position - transform.position).normalized;
     }
 
     private bool DetectBulletsAhead(out Vector3 enemyPosition)
