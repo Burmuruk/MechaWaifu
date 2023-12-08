@@ -14,6 +14,7 @@ public class Enemies : Character
     [SerializeField] float midDistance = 6;
     [SerializeField] float visionAngle = 45;
     [SerializeField] float bulletDectection = 5;
+    [SerializeField] float timeToRefillFuel = 40;
     [Header("Dash")]
     [SerializeField, Range(0, 1)] float dashProbability;
     [SerializeField] float dashCheckTime = 5;
@@ -73,13 +74,23 @@ public class Enemies : Character
             Attacking(attackType, ShotPoint.transform.position, (player.transform.position - ShotPoint.transform.position).normalized);
             print("Attack");
         }
+
         if (dis > midDistance)
         {
-            MoveTo(player.transform.position - transform.position);
+            var dir = player.transform.position - transform.position;
+            MoveTo(dir);
+
+            if (dir.y > 0)
+                Fly();
         }
 
         if (player)
             transform.forward = (player.transform.position - transform.position).normalized;
+
+        if (Fuel <= 0)
+        {
+
+        }
     }
 
     private bool DetectBulletsAhead(out Vector3 enemyPosition)
@@ -146,5 +157,12 @@ public class Enemies : Character
         }
 
         dashChecking = false;
+    }
+
+    IEnumerator RefillFuel()
+    {
+        yield return new WaitForSeconds(timeToRefillFuel);
+
+        Fuel = maxFuel;
     }
 }

@@ -238,8 +238,8 @@ MonoBehaviour:
   midDistance: 3
   visionAngle: 45
   bulletDectection: 2
-  dashProbability: 0.09
-  dashCheckTime: 1
+  dashProbability: 0.028
+  dashCheckTime: 50
   dashAngle: 45
   ShotPoint: {fileID: 1199247580842481569}
 --- !u!54 &9085885773039336607
