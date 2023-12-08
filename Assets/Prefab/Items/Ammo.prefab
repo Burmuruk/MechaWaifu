@@ -97,6 +97,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 151c19b716637a44eaaf9268c6aeab63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ammo: 5
+  health: 5
+  fuel: 20
   drop: 0
 --- !u!65 &3396007462749998125
 BoxCollider:
@@ -106,7 +109,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2797311783759614294}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.265352, y: 1.395906, z: 0.637568}
