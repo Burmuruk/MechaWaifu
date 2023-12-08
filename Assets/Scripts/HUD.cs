@@ -35,23 +35,22 @@ public class HUD : MonoBehaviour
 
     }
 
-    public void ShowHealth(float health)
+    public void ShowHealth(float health, float max)
     {
-        healthBar.fillAmount = health / 100f;
+        healthBar.fillAmount = health / max;
     }
 
-    public void Heal(float healingAmount)
+    public void Heal(float healingAmount, float max)
     {
-        healthAmount += healingAmount;
-        healthAmount = Mathf.Clamp(healthAmount, 0, 100);
+        healthAmount = Mathf.Clamp(healingAmount, 0, 100);
 
-        healthBar.fillAmount = healthAmount / 100f;
+        healthBar.fillAmount = (healthAmount / 100f) * max;
+        print("fill" + healthBar.fillAmount);
     }
 
-    public void ShowFuel(float fuel)
+    public void ShowFuel(float fuel, float max)
     {
-        fuelAmount -= fuel;
-        fuelBar.fillAmount = fuel / 100f;
+        fuelBar.fillAmount = fuel / max;
     }
 
     public void RechargeFuel(float rechargingAmount)

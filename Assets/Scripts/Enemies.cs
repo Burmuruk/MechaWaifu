@@ -72,7 +72,6 @@ public class Enemies : Character
         {
             attacks = attackType;
             Attacking(attackType, ShotPoint.transform.position, (player.transform.position - ShotPoint.transform.position).normalized);
-            print("Attack");
         }
 
         if (dis > midDistance)
