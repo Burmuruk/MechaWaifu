@@ -14,7 +14,7 @@ public class PanelManager : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Cancel"))
         {
             if (currentPanel == null) return;
             currentPanel.SetActive(false);

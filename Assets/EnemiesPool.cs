@@ -8,7 +8,7 @@ public enum EnemyType
 {
     Distance,
     Melee,
-    Misile
+    Berserker
 }
 
 public class EnemiesPool : MonoBehaviour
@@ -18,7 +18,8 @@ public class EnemiesPool : MonoBehaviour
     Dictionary<EnemyType, LinkedList<Enemies>> availables;
     Dictionary<EnemyType, LinkedList<Enemies>> inScene;
 
-    int count = 0;
+    public int count { get; private set; } = 0;
+    public int Availables { get => availables.Count; }
 
     [Serializable]
     public struct EnemyData

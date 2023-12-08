@@ -86,4 +86,12 @@ public class Player : Character
             Debug.DrawRay(transform.position, CameraForward);
         }
     }
+
+    public override void Damage()
+    {
+        base.Damage();
+
+        if (Health <= 0)
+            FindObjectOfType<SceneChanger>().GoToScene(2);
+    }
 }

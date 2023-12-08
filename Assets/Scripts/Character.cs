@@ -22,6 +22,8 @@ public class Character : MonoBehaviour
     #region Boi
     [Space(10), Header("Health")]
     [SerializeField] int health = 3;
+    [SerializeField, Range(0, 10)] int healthRange = 3;
+    [SerializeField] int minHealth = 1;
 
     [Space(10), Header("Attack")]
     [SerializeField]
@@ -92,6 +94,9 @@ public class Character : MonoBehaviour
         {
             sword.gameObject.SetActive(false);
         }
+
+        if (healthRange != 0)
+            health = UnityEngine.Random.Range(minHealth, healthRange + 1);
     }
 
     private void FixedUpdate()
@@ -109,7 +114,7 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void Damage()
+    public virtual void Damage()
     {
         Health -= dmg;
     }

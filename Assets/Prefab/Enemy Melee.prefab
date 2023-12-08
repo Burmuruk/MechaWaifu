@@ -172,7 +172,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8852156883719906895}
   m_LocalRotation: {x: 0, y: 0.9999742, z: -0, w: -0.0071906606}
-  m_LocalPosition: {x: 0.05, y: 1.24, z: 8.89}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -221,6 +221,8 @@ MonoBehaviour:
   isDashing: 0
   time: 1
   health: 500
+  healthRange: 3
+  minHealth: 1
   bullets: {fileID: 8878271999670219957, guid: d053532eadc47f246a0000c11ca4aebe, type: 3}
   sword: {fileID: 6138373724234337993}
   ammo: 200
@@ -232,8 +234,8 @@ MonoBehaviour:
   - {fileID: 6820591696699460378, guid: d006b69460e63a64f967b01de696862a, type: 3}
   - {fileID: 3375667679726945335, guid: 13c9b7fb57aad9348b316f69acf80da4, type: 3}
   - {fileID: 2797311783759614294, guid: 5ab2c82da2941d44f8c42e6ca12b2a1e, type: 3}
-  minDistance: 20
-  midDistance: 15
+  minDistance: 2
+  midDistance: 3
   visionAngle: 45
   bulletDectection: 2
   dashProbability: 0.09

@@ -5,8 +5,8 @@ using UnityEngine;
 public class bullet : MonoBehaviour
 {
     [SerializeField] string enemyTag = "Player";
-    float speed = .1f;
-    float timer = 3000f;
+    [SerializeField] float speed = .1f;
+    [SerializeField] float timer = 3000f;
     float count = 0f;
     Player player;
     Vector3 direction = Vector3.zero;
@@ -28,7 +28,7 @@ public class bullet : MonoBehaviour
         if (player.pause) return;
 
         //transform.position += direction * speed;
-        transform.position += transform.forward * speed;
+        transform.position += transform.forward * speed * Time.deltaTime;
 
         count += Time.deltaTime;
         if (count>timer)
@@ -39,11 +39,14 @@ public class bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.GetComponent<bullet>() || other.GetComponent<Enemies>()) return;
+
         if (other.tag == enemyTag)
         {
             print(other.transform.name);
             other.GetComponent<Character>().Damage();
-            Destroy(gameObject);
         }
+
+        Destroy(gameObject);
     }
 }

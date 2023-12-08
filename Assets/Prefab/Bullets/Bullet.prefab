@@ -128,3 +128,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTag: Player
+  speed: 14
+  timer: 2000
