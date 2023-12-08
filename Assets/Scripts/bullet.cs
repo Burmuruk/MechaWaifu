@@ -43,7 +43,6 @@ public class bullet : MonoBehaviour
 
         if (other.tag == enemyTag)
         {
-            print(other.transform.name);
             other.GetComponent<Character>().Damage();
         }
 

@@ -45,7 +45,7 @@ public class Character : MonoBehaviour
         set
         {
             ammo = value;
-            OnAmmoChanged?.Invoke(value);
+            OnAmmoChanged?.Invoke(ammo);
         }
     }
 
@@ -55,7 +55,8 @@ public class Character : MonoBehaviour
         set
         {
             health = value;
-            OnHealthChanged?.Invoke(value);
+            print(health);
+            OnHealthChanged?.Invoke(health, healthRange);
         }
     }
 
@@ -65,7 +66,7 @@ public class Character : MonoBehaviour
         set
         {
             fuel = value;
-            OnFuelChanged?.Invoke(value);
+            OnFuelChanged?.Invoke(fuel, maxFuel);
         }
     }
 
@@ -74,9 +75,9 @@ public class Character : MonoBehaviour
         slice, shoot
     }
 
-    public event Action<float> OnHealthChanged;
+    public event Action<float, float> OnHealthChanged;
     public event Action<int> OnAmmoChanged;
-    public event Action<float> OnFuelChanged;
+    public event Action<float, float> OnFuelChanged;
     #endregion
 
     #region Burmuruk
@@ -98,7 +99,11 @@ public class Character : MonoBehaviour
         }
 
         if (healthRange != 0)
+        {
             health = UnityEngine.Random.Range(minHealth, healthRange + 1);
+        }
+        else
+            healthRange = health;
     }
 
     private void FixedUpdate()
@@ -181,7 +186,6 @@ public class Character : MonoBehaviour
             case Attack.shoot:
                 if (bullets && Ammo != 0)
                 {
-                    print("shoot");
                     var bullet = Instantiate(bullets, shootPoint, Quaternion.identity);
                     bullet.transform.forward = direction == default ? transform.forward : direction;
                     Ammo -= 1;
