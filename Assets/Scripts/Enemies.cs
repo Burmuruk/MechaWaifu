@@ -30,7 +30,7 @@ public class Enemies : Character
     EnemiesPool pool;
     int item = 0;
 
-    public int enemiesKilled;
+    public static int enemiesKilled;
 
     protected override void Awake()
     {
@@ -38,6 +38,7 @@ public class Enemies : Character
 
         pool = FindObjectOfType<EnemiesPool>();
         player = FindObjectOfType<Player>();
+        hud = FindObjectOfType<HUD>();
     }
 
     protected override void Start()
