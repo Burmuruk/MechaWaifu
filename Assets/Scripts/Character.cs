@@ -116,6 +116,8 @@ public class Character : MonoBehaviour
 
     protected void Fly(bool value = true)
     {
+        if (fuel <= 0) return;
+
         if (value)
         {
             rig.velocity = new()
@@ -150,16 +152,16 @@ public class Character : MonoBehaviour
 
         rig.velocity = new()
         {
-            x = ((destiny - transform.position).normalized * speed).x,
+            x = velocity.x,
             y = rig.velocity.y,
-            z = ((destiny - transform.position).normalized * speed).z,
+            z = velocity.z,
         };
 
         //transform.forward = direction;
         //if (movementDirection != Vector3.zero) transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movementDirection), rotationSpeed * Time.deltaTime);
     }
 
-    protected void Attacking(Attack attackType)
+    protected void Attacking(Attack attackType, Vector3 direction = default)
     {
         if (isDashing || !canAttack) return;
 
@@ -174,7 +176,7 @@ public class Character : MonoBehaviour
                 {
                     print("shoot");
                     var bullet = Instantiate(bullets, transform.position, Quaternion.identity);
-                    bullet.transform.forward = transform.forward;
+                    bullet.transform.forward = direction == default ? transform.forward : direction;
                     Ammo -= 1;
                 }
                 break;

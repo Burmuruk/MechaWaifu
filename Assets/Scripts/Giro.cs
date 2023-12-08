@@ -55,60 +55,13 @@ public class Giro : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //var dis = curRotation.magnitude - Input.acceleration.magnitude ;
-        //print(dis);
-
-        //var hi = Input.acceleration;
-        //MoveCamera(hi);
-        //curRotation = hi;
-        //var cel = Input.gyro.attitude.eulerAngles;
-        //acel = Input.gyro.userAcceleration;
-        //acel.Normalize();
-
-        //if (Input.touchCount > 0)
-        //{
-        //    offset = cel;
-        //}
-
-        //print(Input.gyro.userAcceleration.normalized);
-        //transform.rotation = Quaternion.Euler((cel.y - offset.y) , (cel.x - offset.x) * acel.y * speed * -1, cel.z - offset.z);
-        //transform.rotation = Quaternion.Euler(cel.x, cel.y * -1, cel.z + 180);
-
-
-
-
-
-        //transform.rotation = Input.gyro.attitude;
-        ////transform.rotation = Quaternion.Euler((cel.y - offset.y) , (cel.x - offset.x) * acel.y * speed * -1, cel.z - offset.z);
-        //transform.Rotate(0, 0, 180, Space.Self);
-        //transform.Rotate(90, 180, 0, Space.World);
-
-        //if (started)
-        //{
-        //    System.Timers.Timer hu = new System.Timers.Timer(3000);
-        //    hu.AutoReset = false;
-        //    hu.Elapsed += delegate { calY = transform.eulerAngles.y - yInicial; };
-        //}
-
-
 
         Quaternion rotation = Input.gyro.attitude * rot;
         transform.localRotation = rotation;
-        player.transform.forward = new Vector3(transform.forward.x, player.transform.forward.y, player.transform.forward.z);
-        //player.transform.Rotate(Vector3.up, transform.rotation.y);
-        //player.transform.rotation = Quaternion.Euler(new(player.transform.localEulerAngles.x, transform.rotation.y, player.transform.rotation.z));
+        player.CameraForward = transform.forward;
         player.CameraNormal = Vector3.Cross(transform.forward, transform.right);
-
-
-
-        //if (Input.gyro.attitude.eulerAngles is var r && MathF.Abs(curRotation.magnitude - r.magnitude) > gap)
-        //{
-        //    MoveCamera(r);
-        //    curRotation = r;
-        //}
     }
 
     private void MoveCamera(Vector3 rotation)
