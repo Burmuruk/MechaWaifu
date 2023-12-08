@@ -13,6 +13,7 @@ public class HUD : MonoBehaviour
     public float fuelAmount = 100f;
 
     public TextMeshProUGUI bulletCount;
+    public TextMeshProUGUI score;
     Player player;
 
     private void Awake()
@@ -20,7 +21,7 @@ public class HUD : MonoBehaviour
         player = FindObjectOfType<Player>();
         player.OnHealthChanged += ShowHealth;
         player.OnAmmoChanged += BulletCount;
-        player.OnFuelChanged += ShowFuel;
+        player.OnFuelChanged += ShowFuel; 
     }
 
     // Start is called before the first frame update
@@ -64,5 +65,10 @@ public class HUD : MonoBehaviour
     public void BulletCount(int bullets)
     {
         bulletCount.text = bullets.ToString();
+    }
+
+    public void Score(int enemiesKilled)
+    {
+        score.text = enemiesKilled.ToString();
     }
 }
