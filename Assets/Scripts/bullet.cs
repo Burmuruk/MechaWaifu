@@ -39,7 +39,7 @@ public class bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<bullet>() || other.GetComponent<Enemies>()) return;
+        if (other.GetComponent<bullet>() || (other.GetComponent<Enemies>() || other.GetComponent<Player>()) && other.tag != enemyTag) return;
 
         if (other.tag == enemyTag)
         {
