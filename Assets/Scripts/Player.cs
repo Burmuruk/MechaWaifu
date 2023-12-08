@@ -5,6 +5,7 @@ public class Player : Character
 {
     Vector3 direction = default;
 
+    public Vector3 CameraForward { get; set; }
     public Vector3 CameraNormal { get; set; }
 
     private void Update()
@@ -21,18 +22,16 @@ public class Player : Character
             z = Input.GetAxis("Vertical"),
         };
 
-        //direction = Vector3.ProjectOnPlane(direction, CameraNormal);
+        var angle = Vector3.SignedAngle(new(Vector3.forward.x, 0, Vector3.forward.z), new(CameraForward.x, 0, CameraForward.z), Vector3.up);
+        Vector3 rotatedDir = Quaternion.AngleAxis(angle, Vector3.up) * direction;
 
-        if (Input.anyKeyDown)
-        {
-            var names = Input.GetJoystickNames();
+        //Debug.DrawRay(transform.position , rotatedDir * 3, Color.red);
 
-            foreach (var name in names)
-            {
-                print(name);
-            }
-        }
-        
+        if (direction != default)
+            MoveTo(rotatedDir);
+
+        transform.forward = Quaternion.AngleAxis(angle, Vector3.up) * Vector3.forward;
+
         //if (Input.GetButtonDown("Fire1"))
         //    print("button 0");
 
@@ -45,20 +44,20 @@ public class Player : Character
         //if (Input.GetButtonDown("Shoot"))
         //    print("button 3");
 
-        MoveTo(direction);
+        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetButtonDown("Dash"))
+        {
+            Dash(rotatedDir);
+        }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-            Dash(direction);
-
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetButtonDown("Hit"))
         {
             Attacking(Attack.slice);
-            Time.timeScale = 0f;
         }
 
         if (Input.GetMouseButtonDown(1) || Input.GetButtonDown("Shoot"))
         {
-            Attacking(Attack.shoot);
+            Attacking(Attack.shoot, CameraForward);
+            Debug.DrawRay(transform.position, CameraForward);
         }
     }
 }

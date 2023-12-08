@@ -25,7 +25,9 @@ public class bullet : MonoBehaviour
 
     void Update()
     {
-        transform.position += direction * speed;
+        //transform.position += direction * speed;
+        transform.position += transform.forward * speed;
+
         count += Time.deltaTime;
         if (count>timer)
         {
