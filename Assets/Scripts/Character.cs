@@ -34,7 +34,9 @@ public class Character : MonoBehaviour
     protected Attack attacks;
     int dmg = 1;
     [SerializeField] int ammo = 10;
+    [SerializeField] protected int maxAmmo = 10;
     [SerializeField] float fuel = 100;
+    [SerializeField] protected float maxFuel = 100;
     [SerializeField] float fuelConsuption = 2;
 
     public int Ammo
