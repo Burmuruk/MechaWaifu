@@ -72,13 +72,24 @@ public class Enemies : Character
         }
 
         var dis = Vector3.Distance(player.transform.position, transform.position);
-        if (dis < minDistance)
+        if (dis <= minDistance)
         {
             attacks = attackType;
             Attacking(attackType, ShotPoint.transform.position, (player.transform.position - ShotPoint.transform.position).normalized);
+            rig.velocity = new Vector3(0, rig.velocity.y, 0);
         }
+        else if (dis > minDistance && dis < midDistance)
+        {
+            attacks = attackType;
+            Attacking(attackType, ShotPoint.transform.position, (player.transform.position - ShotPoint.transform.position).normalized);
 
-        if (dis > midDistance)
+            var dir = player.transform.position - transform.position;
+            MoveTo(dir);
+
+            if (dir.y > 0)
+                Fly();
+        }
+        else if (dis > midDistance)
         {
             var dir = player.transform.position - transform.position;
             MoveTo(dir);
@@ -155,10 +166,13 @@ public class Enemies : Character
                 {
                     var angle = Random.Range(0, dashAngle);
                     angle *= Random.value < .5f ? -1 : 1;
-                    Vector3 direction = (transform.position - enemyPosition) / Mathf.Cos(angle);
-                    Debug.DrawRay(transform.position, direction * 5, Color.red);
+                    Vector3 direction = Quaternion.AngleAxis(angle, Vector3.up) * (transform.position - enemyPosition);
+                    direction.Normalize();
+                    direction *= 5;
+                    //Debug.DrawRay(transform.position, direction, Color.red, 10);
 
-                    Dash(direction);
+                    if (!IsDashig)
+                        Dash(direction);
                 }
             }
 

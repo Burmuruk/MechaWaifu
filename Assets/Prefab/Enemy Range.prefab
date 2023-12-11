@@ -238,7 +238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   flySpeed: 5
-  dashSpeed: 0
+  dashSpeed: 15
   isDashing: 0
   time: 1
   health: 500
@@ -262,9 +262,9 @@ MonoBehaviour:
   visionAngle: 45
   bulletDectection: 2
   timeToRefillFuel: 40
-  dashProbability: 0.224
-  dashCheckTime: 5
-  dashAngle: 45
+  dashProbability: 0.71
+  dashCheckTime: 2
+  dashAngle: 90
   ShotPoint: {fileID: 7120072304465320080}
 --- !u!54 &6858329317377984715
 Rigidbody:

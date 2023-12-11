@@ -53,7 +53,6 @@ public class Character : MonoBehaviour
         set
         {
             health = value;
-            print(health);
             OnHealthChanged?.Invoke(health, healthRange);
         }
     }
